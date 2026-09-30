@@ -1,5 +1,9 @@
 # Data Detective
 
+[![CI](https://github.com/k-divyanshu/data-detective/actions/workflows/ci.yml/badge.svg)](https://github.com/k-divyanshu/data-detective/actions/workflows/ci.yml)
+
+**Live demo: https://peaceful-chimera-357349.netlify.app**
+
 A learning platform with two separate tracks, chosen on the home screen:
 
 - **Data Engineering**: investigate broken datasets, write SQL against them in the browser, and answer
@@ -116,6 +120,13 @@ Row order and column names are ignored; values and row and column counts must ma
 In Data Engineering, completing every question in a challenge marks it complete. The streak counts consecutive days
 on which you solved something. All of it lives in your browser's `localStorage` (keys starting
 with `data-detective-`), so clearing site data resets it, and the Progress page has a reset button.
+
+## Deployment
+
+The app is a static site hosted on Netlify, which redeploys on every push to `main`. `netlify.toml`
+sets the build (`npm run build` in `frontend/`, publish `dist`), and `frontend/public/_redirects`
+makes deep links such as `/claude/practice` survive a page refresh. Any static host works with the
+same two settings: build command `npm run build` and output folder `frontend/dist`.
 
 ## Roadmap ideas
 
