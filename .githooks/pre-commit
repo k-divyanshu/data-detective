@@ -1,0 +1,8 @@
+#!/bin/sh
+# Runs lint, type-check and unit tests before every commit.
+# Enabled by `npm install` (see the "prepare" script in frontend/package.json).
+# Skip once, in an emergency, with: git commit --no-verify
+set -e
+cd "$(git rev-parse --show-toplevel)/frontend"
+echo "pre-commit: running checks (lint, type-check, tests)..."
+npm run check
