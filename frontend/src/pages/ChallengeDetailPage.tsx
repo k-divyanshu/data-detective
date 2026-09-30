@@ -4,6 +4,7 @@ import { Badge } from '../components/Badge'
 import { DifficultyBadge } from '../components/DifficultyBadge'
 import { DuplicateOrdersChallenge } from '../components/DuplicateOrdersChallenge'
 import { MissingCustomerIdsChallenge } from '../components/MissingCustomerIdsChallenge'
+import { OrphanOrdersChallenge } from '../components/OrphanOrdersChallenge'
 import { RevenueDropChallenge } from '../components/RevenueDropChallenge'
 import { getChallengeById } from '../data/challenges'
 
@@ -12,6 +13,7 @@ const challengeViews: Record<string, ComponentType> = {
   'duplicate-orders': DuplicateOrdersChallenge,
   'missing-customer-ids': MissingCustomerIdsChallenge,
   'unexpected-revenue-drop': RevenueDropChallenge,
+  'orders-vanish-after-join': OrphanOrdersChallenge,
 }
 
 export function ChallengeDetailPage() {

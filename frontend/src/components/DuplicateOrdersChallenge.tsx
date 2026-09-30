@@ -9,6 +9,7 @@ import { Badge } from './Badge'
 import { DataTable, type Column } from './DataTable'
 import { DuplicateLearningSection } from './DuplicateLearningSection'
 import { orderColumns } from './orderColumns'
+import { ProblemCard } from './ProblemCard'
 import { RatioBar } from './RatioBar'
 import { SqlRunner } from './SqlRunner'
 import { StatCard } from './StatCard'
@@ -92,20 +93,18 @@ export function DuplicateOrdersChallenge() {
 
   return (
     <>
-      <section className="card">
-        <h2>Problem</h2>
-        <p>
-          The finance team says yesterday's revenue dashboard looks higher than the payment
-          provider's report. The <code>orders</code> table was loaded by a pipeline that
-          recently retried a failed run. Investigate whether duplicate orders are the cause.
-        </p>
-        <dl className="meta-list">
-          <div><dt>Dataset</dt><dd>orders</dd></div>
-          <div><dt>Source</dt><dd>Synthetic sample</dd></div>
-          <div><dt>Columns</dt><dd>order_id, customer_id, amount, order_date</dd></div>
-          <div><dt>Rows</dt><dd>{analysis.totalRecords}</dd></div>
-        </dl>
-      </section>
+      <ProblemCard
+        meta={[
+          { label: 'Dataset', value: 'orders' },
+          { label: 'Source', value: 'Synthetic sample' },
+          { label: 'Columns', value: 'order_id, customer_id, amount, order_date' },
+          { label: 'Rows', value: analysis.totalRecords },
+        ]}
+      >
+        The finance team says yesterday's revenue dashboard looks higher than the payment
+        provider's report. The <code>orders</code> table was loaded by a pipeline that
+        recently retried a failed run. Investigate whether duplicate orders are the cause.
+      </ProblemCard>
 
       <section>
         <h2>Investigation summary</h2>
@@ -144,7 +143,7 @@ export function DuplicateOrdersChallenge() {
         />
       </section>
 
-      <SqlRunner tables={sqlTables} suggestions={suggestions} />
+      <SqlRunner tables={sqlTables} suggestions={suggestions} historyKey={CHALLENGE_ID} />
 
       <AnswerForm
         questions={questions}

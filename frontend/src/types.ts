@@ -17,6 +17,13 @@ export interface Order {
   order_date: string
 }
 
+export interface Customer {
+  customer_id: string
+  name: string
+  country: string
+  signup_date: string
+}
+
 // Orders for the revenue investigation: one row per order, tagged with a sales region.
 export interface SalesOrder {
   order_id: number
@@ -111,4 +118,15 @@ export interface RevenueDropAnalysis {
 export interface QueryResult {
   columns: string[]
   rows: SqlCell[][]
+}
+
+export interface OrphanOrdersAnalysis {
+  totalOrders: number
+  orphanOrders: number // orders whose customer_id has no row in customers
+  orphanCustomerIds: string[] // distinct, sorted
+  totalRevenue: number
+  innerJoinRevenue: number // revenue that survives orders INNER JOIN customers
+  lostRevenue: number
+  lostRate: number // percentage of revenue lost, 0-100
+  isOrphan: boolean[] // one entry per input order
 }

@@ -9,6 +9,7 @@ import { AnswerForm } from './AnswerForm'
 import { DailyRevenueChart } from './DailyRevenueChart'
 import { DataTable, type Column } from './DataTable'
 import { RevenueDropLearningSection } from './RevenueDropLearningSection'
+import { ProblemCard } from './ProblemCard'
 import { SqlRunner } from './SqlRunner'
 import { StatCard } from './StatCard'
 
@@ -114,20 +115,18 @@ export function RevenueDropChallenge() {
 
   return (
     <>
-      <section className="card">
-        <h2>Problem</h2>
-        <p>
-          The executive revenue dashboard shows a sharp fall in daily revenue, yet marketing says
-          traffic and campaigns were normal. The data pipeline was updated and ran on the day the
-          numbers changed. Find out when it happened, what changed, and why.
-        </p>
-        <dl className="meta-list">
-          <div><dt>Datasets</dt><dd>orders, pipeline_runs</dd></div>
-          <div><dt>Source</dt><dd>Synthetic sample</dd></div>
-          <div><dt>Period</dt><dd>2026-09-01 → 2026-09-10</dd></div>
-          <div><dt>Rows</dt><dd>{salesOrders.length} orders · {pipelineRuns.length} runs</dd></div>
-        </dl>
-      </section>
+      <ProblemCard
+        meta={[
+          { label: 'Datasets', value: 'orders, pipeline_runs' },
+          { label: 'Source', value: 'Synthetic sample' },
+          { label: 'Period', value: '2026-09-01 → 2026-09-10' },
+          { label: 'Rows', value: `${salesOrders.length} orders · ${pipelineRuns.length} runs` },
+        ]}
+      >
+        The executive revenue dashboard shows a sharp fall in daily revenue, yet marketing says
+        traffic and campaigns were normal. The data pipeline was updated and ran on the day the
+        numbers changed. Find out when it happened, what changed, and why.
+      </ProblemCard>
 
       <section>
         <h2>Investigation summary</h2>
@@ -150,7 +149,7 @@ export function RevenueDropChallenge() {
         <DataTable columns={runColumns} rows={pipelineRuns} />
       </section>
 
-      <SqlRunner tables={sqlTables} suggestions={suggestions} />
+      <SqlRunner tables={sqlTables} suggestions={suggestions} historyKey={CHALLENGE_ID} />
 
       <AnswerForm
         questions={questions}

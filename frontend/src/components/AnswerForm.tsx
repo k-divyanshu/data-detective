@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { Question } from '../types'
 import { gradeSqlAnswer } from '../utils/sqlEngine'
 import { Badge } from './Badge'
+import { CodeBlock } from './CodeBlock'
 
 interface AnswerFormProps {
   questions: Question[]
@@ -12,6 +13,11 @@ interface AnswerFormProps {
 interface QuestionResult {
   correct: boolean
   message?: string // specific feedback that replaces the question's generic hint
+}
+
+// Hints are written to follow "Not quite — ", so they start in lowercase.
+function asSentence(text: string): string {
+  return text.charAt(0).toUpperCase() + text.slice(1)
 }
 
 async function gradeQuestion(question: Question, given: string): Promise<QuestionResult> {
@@ -30,6 +36,9 @@ export function AnswerForm({ questions, alreadyCompleted, onAllCorrect }: Answer
   // question id -> outcome of the last submit. null until the first submit.
   const [results, setResults] = useState<Record<string, QuestionResult> | null>(null)
   const [checking, setChecking] = useState(false)
+  // question id -> has the user asked to see the hint / the reference query?
+  const [shownHints, setShownHints] = useState<Record<string, boolean>>({})
+  const [shownSolutions, setShownSolutions] = useState<Record<string, boolean>>({})
 
   const allAnswered = questions.every((question) => (answers[question.id] ?? '').trim() !== '')
   const allCorrect = results !== null && questions.every((question) => results[question.id]?.correct)
@@ -109,6 +118,39 @@ export function AnswerForm({ questions, alreadyCompleted, onAllCorrect }: Answer
                 value={answers[question.id] ?? ''}
                 onChange={(event) => setAnswer(question.id, event.target.value)}
               />
+            )}
+
+            <div className="help-row">
+              {!shownHints[question.id] && (
+                <button
+                  type="button"
+                  className="link-button"
+                  onClick={() => setShownHints((current) => ({ ...current, [question.id]: true }))}
+                >
+                  Show hint
+                </button>
+              )}
+              {question.kind === 'sql' && !shownSolutions[question.id] && (
+                <button
+                  type="button"
+                  className="link-button"
+                  onClick={() => setShownSolutions((current) => ({ ...current, [question.id]: true }))}
+                >
+                  Show solution
+                </button>
+              )}
+            </div>
+
+            {shownHints[question.id] && (
+              <p className="hint-box">
+                <strong>Hint:</strong> {asSentence(question.hint)}
+              </p>
+            )}
+            {question.kind === 'sql' && shownSolutions[question.id] && (
+              <div className="solution-box">
+                <p className="muted small">One possible solution. Other queries that return the same result also count.</p>
+                <CodeBlock language="sql" code={question.expectedSql} />
+              </div>
             )}
 
             {result && (

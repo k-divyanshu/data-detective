@@ -10,6 +10,7 @@ import { Badge } from './Badge'
 import { DataTable, type Column } from './DataTable'
 import { MissingIdsLearningSection } from './MissingIdsLearningSection'
 import { orderColumns } from './orderColumns'
+import { ProblemCard } from './ProblemCard'
 import { RatioBar } from './RatioBar'
 import { SqlRunner } from './SqlRunner'
 import { StatCard } from './StatCard'
@@ -91,21 +92,19 @@ export function MissingCustomerIdsChallenge() {
 
   return (
     <>
-      <section className="card">
-        <h2>Problem</h2>
-        <p>
-          The growth team is building a customer lifetime value report, but the numbers per
-          customer look too low. The <code>orders</code> table comes from a checkout system that
-          sometimes fails to attach a customer. Investigate how many orders are affected and what
-          that means downstream.
-        </p>
-        <dl className="meta-list">
-          <div><dt>Dataset</dt><dd>orders</dd></div>
-          <div><dt>Source</dt><dd>Synthetic sample</dd></div>
-          <div><dt>Columns</dt><dd>order_id, customer_id, amount, order_date</dd></div>
-          <div><dt>Rows</dt><dd>{analysis.totalRecords}</dd></div>
-        </dl>
-      </section>
+      <ProblemCard
+        meta={[
+          { label: 'Dataset', value: 'orders' },
+          { label: 'Source', value: 'Synthetic sample' },
+          { label: 'Columns', value: 'order_id, customer_id, amount, order_date' },
+          { label: 'Rows', value: analysis.totalRecords },
+        ]}
+      >
+        The growth team is building a customer lifetime value report, but the numbers per
+        customer look too low. The <code>orders</code> table comes from a checkout system that
+        sometimes fails to attach a customer. Investigate how many orders are affected and what
+        that means downstream.
+      </ProblemCard>
 
       <section>
         <h2>Investigation summary</h2>
@@ -148,7 +147,7 @@ export function MissingCustomerIdsChallenge() {
         />
       </section>
 
-      <SqlRunner tables={sqlTables} suggestions={suggestions} />
+      <SqlRunner tables={sqlTables} suggestions={suggestions} historyKey={CHALLENGE_ID} />
 
       <AnswerForm
         questions={questions}

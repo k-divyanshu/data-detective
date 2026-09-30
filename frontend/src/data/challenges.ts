@@ -28,6 +28,15 @@ export const challenges: Challenge[] = [
       'Investigate why reported revenue suddenly decreased after a pipeline run.',
     available: true,
   },
+  {
+    id: 'orders-vanish-after-join',
+    title: 'Orders That Vanish After a Join',
+    category: 'SQL Joins',
+    difficulty: 'Intermediate',
+    description:
+      'A join between orders and customers loses revenue without any error. Find the orphaned orders and choose the right join.',
+    available: true,
+  },
 ]
 
 export function getChallengeById(id: string): Challenge | undefined {

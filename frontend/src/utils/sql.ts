@@ -1,35 +1,39 @@
-import type { Order, PipelineRun, SalesOrder, SqlCell, SqlTable } from '../types'
+import type { Customer, Order, PipelineRun, SalesOrder, SqlCell, SqlTable } from '../types'
+
+function buildTable(name: string, columns: SqlTable['columns'], rows: object[]): SqlTable {
+  return { name, columns, rows: rows.map((row) => ({ ...row }) as Record<string, SqlCell>) }
+}
 
 export function ordersToSqlTable(name: string, orders: Order[]): SqlTable {
-  return {
+  return buildTable(
     name,
-    columns: [
+    [
       { name: 'order_id', type: 'INTEGER' },
       { name: 'customer_id', type: 'TEXT' },
       { name: 'amount', type: 'REAL' },
       { name: 'order_date', type: 'TEXT' },
     ],
-    rows: orders.map((order) => ({ ...order })),
-  }
+    orders,
+  )
 }
 
 export function salesOrdersToSqlTable(name: string, orders: SalesOrder[]): SqlTable {
-  return {
+  return buildTable(
     name,
-    columns: [
+    [
       { name: 'order_id', type: 'INTEGER' },
       { name: 'region', type: 'TEXT' },
       { name: 'amount', type: 'REAL' },
       { name: 'order_date', type: 'TEXT' },
     ],
-    rows: orders.map((order) => ({ ...order }) as Record<string, SqlCell>),
-  }
+    orders,
+  )
 }
 
 export function pipelineRunsToSqlTable(name: string, runs: PipelineRun[]): SqlTable {
-  return {
+  return buildTable(
     name,
-    columns: [
+    [
       { name: 'run_id', type: 'INTEGER' },
       { name: 'run_date', type: 'TEXT' },
       { name: 'region', type: 'TEXT' },
@@ -37,6 +41,19 @@ export function pipelineRunsToSqlTable(name: string, runs: PipelineRun[]): SqlTa
       { name: 'rows_loaded', type: 'INTEGER' },
       { name: 'status', type: 'TEXT' },
     ],
-    rows: runs.map((run) => ({ ...run }) as Record<string, SqlCell>),
-  }
+    runs,
+  )
+}
+
+export function customersToSqlTable(name: string, customers: Customer[]): SqlTable {
+  return buildTable(
+    name,
+    [
+      { name: 'customer_id', type: 'TEXT' },
+      { name: 'name', type: 'TEXT' },
+      { name: 'country', type: 'TEXT' },
+      { name: 'signup_date', type: 'TEXT' },
+    ],
+    customers,
+  )
 }
