@@ -1,0 +1,9 @@
+# Netlify build settings. The app lives in frontend/, so build and publish paths are relative to it.
+[build]
+  base = "frontend"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Vite and Vitest need Node 22.12 or newer.
+  NODE_VERSION = "22"
