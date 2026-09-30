@@ -1,8 +1,9 @@
 # Data Detective
 
-Learning app for data engineers: investigate synthetic datasets, run SQL in the browser, answer
-questions. Client-only React app in `frontend/`. The owner is a data engineer new to web dev, so
-keep code simple and readable, and briefly explain non-obvious decisions.
+Learning platform with two independent tracks: **Data Engineering** (investigate synthetic datasets,
+run SQL in the browser) and **Claude Developer** (study tool for the Claude Certified Developer –
+Foundations exam). Client-only React app in `frontend/`. The owner is a data engineer new to web dev,
+so keep code simple and readable, and briefly explain non-obvious decisions.
 
 ## Commands (run from `frontend/`)
 - `npm run dev`: dev server at http://localhost:5173
@@ -11,17 +12,21 @@ keep code simple and readable, and briefly explain non-obvious decisions.
 - `npm test` / `npm run test:watch`: Vitest (node environment, `src/**/*.test.ts` only)
 
 ## Architecture
-- `src/data/` synthetic datasets and `challenges.ts` (the challenge list)
-- `src/utils/` pure logic (analysis, streaks, SQL engine + result comparison). Tested.
-- `src/components/` reusable UI, plus one `<Name>Challenge.tsx` + `<Name>LearningSection.tsx` per challenge
-- `src/pages/` one file per route; `src/progress/` progress state in localStorage
-- Adding a challenge: follow "Adding a challenge" in `README.md`. Also register it in `challengeViews`
-  in `pages/ChallengeDetailPage.tsx`, or it renders as "Coming soon".
+- Routes: `/` track selection, `/data-engineering/*`, `/claude/*`. Each track has its own layout,
+  progress state and localStorage keys. Never import from one track into the other.
+- `src/shared/` generic UI and hooks used by both tracks (Badge, StatCard, TrackLayout, storage helpers)
+- `src/tracks/data-engineering/` `data/` datasets + `challenges.ts`, `utils/` tested logic,
+  `components/` one `<Name>Challenge.tsx` + `<Name>LearningSection.tsx` per challenge, `pages/`, `progress/`
+- `src/tracks/claude/` `data/` (exam config, resources, questions per domain, mock exams),
+  `utils/` tested logic, `state/` progress/notes/tips hooks, `components/`, `pages/`
+- Adding a DE challenge: follow "Adding a challenge" in `README.md`; also register it in `challengeViews`
+  in `tracks/data-engineering/pages/ChallengeDetailPage.tsx`, or it renders as "Coming soon".
 
 ## Code conventions
 - Strict TypeScript. No `enum` (`erasableSyntaxOnly`); use `import type` for types (`verbatimModuleSyntax`).
 - No unused variables or parameters (`noUnusedLocals/Parameters` fail the build).
-- Plain CSS with variables in `src/index.css`. No CSS framework or UI library.
+- Plain CSS with variables in `src/index.css`; the track accent comes from `data-track` on `<html>`.
+  No CSS framework or UI library.
 - Keep data out of components where practical; put analysis logic in `utils/` with a `.test.ts`.
 - Comments only where the reason is non-obvious.
 
@@ -34,6 +39,19 @@ keep code simple and readable, and briefly explain non-obvious decisions.
 - Progress and query history live in localStorage (`data-detective-*` keys). Changing their
   stored shape needs a version bump (`-v1`) and tolerant loading.
 - Dates in progress logic use the local calendar day, not UTC.
+
+## Claude Developer track rules
+- Exam facts (domains, weights, format) come only from the official Exam Guide, recorded in
+  `tracks/claude/data/exam.ts`. Never invent or guess them; mark anything unverified as such.
+- Provenance is always shown: resources are `official` or `community` (integrity test checks the host),
+  questions are `original`, `ai-generated` or `community-inspired`. Never label anything official that
+  Anthropic did not publish. Questions we write are `ai-generated`.
+- Never add real or leaked exam questions. Do not import questions from third-party sites.
+- Any URL added to `resources.ts` must be checked (HTTP 200) and given today's `lastVerified`.
+- New questions: explain every wrong option in `whyIncorrect`, link `resourceIds`, and avoid brittle
+  facts (prices, model names). `data/dataIntegrity.test.ts` enforces the structure.
+- Authored questions list the right answer first; anything shown to learners must go through
+  `withShuffledOptions`.
 
 ## Scope and boundaries
 - No backend, database, auth, cloud services or AI API yet. Datasets stay synthetic.
