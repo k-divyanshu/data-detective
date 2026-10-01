@@ -11,9 +11,9 @@ export const claudeCodeQuestions: Question[] = [
     type: 'single',
     options: [
       { id: 'a', text: 'A permission deny rule or a PreToolUse hook that blocks the command' },
-      { id: 'b', text: 'A sentence in CLAUDE.md asking Claude not to run it' },
-      { id: 'c', text: 'A polite instruction in the first message of each session' },
-      { id: 'd', text: 'Nothing; enforcement is impossible' },
+      { id: 'b', text: 'A sentence in CLAUDE.md asking Claude never to run that command' },
+      { id: 'c', text: 'A polite instruction in the first message of every session' },
+      { id: 'd', text: 'Nothing, because enforcement is impossible with a language model' },
     ],
     correctAnswer: ['a'],
     explanation:
@@ -35,9 +35,9 @@ export const claudeCodeQuestions: Question[] = [
     type: 'single',
     options: [
       { id: 'a', text: 'In the project\'s CLAUDE.md, committed to the repository' },
-      { id: 'b', text: 'Only in your personal ~/.claude/CLAUDE.md' },
-      { id: 'c', text: 'In a CLAUDE.local.md file' },
-      { id: 'd', text: 'In each teammate\'s memory' },
+      { id: 'b', text: 'Only in your personal CLAUDE.md in the home directory' },
+      { id: 'c', text: 'In a CLAUDE.local.md file kept out of version control' },
+      { id: 'd', text: 'In each teammate\'s own memory of the conversation' },
     ],
     correctAnswer: ['a'],
     explanation:

@@ -10,9 +10,9 @@ export const promptContextEngineeringQuestions: Question[] = [
     type: 'single',
     options: [
       { id: 'a', text: 'After the documents, near the end of the prompt' },
-      { id: 'b', text: 'Before the documents, at the very top' },
-      { id: 'c', text: 'Hidden inside the middle of the largest document' },
-      { id: 'd', text: 'It does not matter; placement never affects results' },
+      { id: 'b', text: 'Before the documents, at the very top of the prompt' },
+      { id: 'c', text: 'Hidden in the middle of the largest document' },
+      { id: 'd', text: 'Anywhere at all, because placement never affects results' },
     ],
     correctAnswer: ['a'],
     explanation:
@@ -34,10 +34,10 @@ export const promptContextEngineeringQuestions: Question[] = [
       'Claude\'s answers follow your instructions but the output format keeps varying. The instructions are already clear. Which change most directly helps?',
     type: 'single',
     options: [
-      { id: 'a', text: 'Add a few well-chosen examples that show exactly the desired format' },
-      { id: 'b', text: 'Make the instructions longer with stronger adjectives' },
-      { id: 'c', text: 'Repeat the instructions in capital letters several times' },
-      { id: 'd', text: 'Increase max_tokens' },
+      { id: 'a', text: 'Add a few well-chosen examples that show exactly the format you want' },
+      { id: 'b', text: 'Make the instructions longer, with stronger and more emphatic wording' },
+      { id: 'c', text: 'Repeat the instructions in capital letters several times in the prompt' },
+      { id: 'd', text: 'Increase max_tokens so the model has more room to format its answer' },
     ],
     correctAnswer: ['a'],
     explanation:
@@ -59,10 +59,10 @@ export const promptContextEngineeringQuestions: Question[] = [
       'A long-running agent\'s context fills up with large tool outputs from early steps that are no longer needed, and answer quality drops. What is the best remedy?',
     type: 'single',
     options: [
-      { id: 'a', text: 'Prune or summarize old tool results and keep only what later steps need' },
-      { id: 'b', text: 'Keep everything and hope a larger window fixes it' },
-      { id: 'c', text: 'Remove the system prompt to save space' },
-      { id: 'd', text: 'Restart the agent with no memory after every step' },
+      { id: 'a', text: 'Prune or summarize old tool results, keeping only what later steps need' },
+      { id: 'b', text: 'Keep everything and rely on a larger context window to fix quality' },
+      { id: 'c', text: 'Remove the system prompt entirely to free up space for tool output' },
+      { id: 'd', text: 'Restart the agent with no memory at all after every single step' },
     ],
     correctAnswer: ['a'],
     explanation:
@@ -83,10 +83,10 @@ export const promptContextEngineeringQuestions: Question[] = [
     question: 'Your application parses JSON that Claude produces. Which practice is best?',
     type: 'single',
     options: [
-      { id: 'a', text: 'Validate the parsed result against a schema and handle malformed or incomplete output with a retry or fallback' },
-      { id: 'b', text: 'Assume it is valid because Claude sounds confident' },
-      { id: 'c', text: 'Insert the output directly into the database to save time' },
-      { id: 'd', text: 'Use a single regular expression and ignore failures' },
+      { id: 'a', text: 'Validate the parsed result against a schema and retry or fall back when it is malformed' },
+      { id: 'b', text: 'Assume it is valid, because Claude\'s answers always sound confident and are well-formed' },
+      { id: 'c', text: 'Insert the parsed output directly into the database, which saves a validation step later' },
+      { id: 'd', text: 'Match it with one regular expression and silently ignore any failures that occur' },
     ],
     correctAnswer: ['a'],
     explanation:

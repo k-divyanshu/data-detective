@@ -9,10 +9,10 @@ export const toolsMcpQuestions: Question[] = [
     question: 'Which change most improves how reliably Claude chooses and uses a tool?',
     type: 'single',
     options: [
-      { id: 'a', text: 'A clear, detailed description of what the tool does, when to use it, and what each parameter means' },
-      { id: 'b', text: 'A very short name and no description' },
-      { id: 'c', text: 'Adding many similar tools with overlapping purposes' },
-      { id: 'd', text: 'Hiding parameter names to keep the request small' },
+      { id: 'a', text: 'A clear, detailed description of what the tool does, when to use it, and each parameter' },
+      { id: 'b', text: 'A very short name with no description, to keep the request as small as possible' },
+      { id: 'c', text: 'Several similar tools with overlapping purposes, so one is always a good match' },
+      { id: 'd', text: 'Hidden parameter names, since fewer visible details should make the schema simpler' },
     ],
     correctAnswer: ['a'],
     explanation:
@@ -82,10 +82,10 @@ export const toolsMcpQuestions: Question[] = [
       'You want Claude to query your company\'s live ticketing system during a task. Which approach is the best fit?',
     type: 'single',
     options: [
-      { id: 'a', text: 'Connect it through a tool, for example an MCP server that wraps the ticketing API' },
-      { id: 'b', text: 'Write a CLAUDE.md paragraph describing the tickets from memory' },
-      { id: 'c', text: 'Copy a snapshot of tickets into the system prompt once a year' },
-      { id: 'd', text: 'Rely on a skill that contains only static instructions' },
+      { id: 'a', text: 'Connect it through a tool, for example an MCP server wrapping the ticketing API' },
+      { id: 'b', text: 'Describe the tickets from memory in a paragraph of CLAUDE.md for the team' },
+      { id: 'c', text: 'Copy a snapshot of the tickets into the system prompt once a year' },
+      { id: 'd', text: 'Rely on a skill that contains only static instructions and no live access' },
     ],
     correctAnswer: ['a'],
     explanation:

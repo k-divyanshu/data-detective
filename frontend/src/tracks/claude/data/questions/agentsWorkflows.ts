@@ -10,10 +10,10 @@ export const agentsWorkflowsQuestions: Question[] = [
       'A pipeline extracts fields from an invoice, validates them against fixed rules, and writes them to a database. The steps are identical every time. What is the best design?',
     type: 'single',
     options: [
-      { id: 'a', text: 'A workflow with predefined code paths, using Claude for the steps that need language understanding' },
-      { id: 'b', text: 'A fully autonomous agent, because agents are always more accurate' },
-      { id: 'c', text: 'A manager agent that spawns subagents for every field' },
-      { id: 'd', text: 'Neither; Claude cannot follow fixed steps' },
+      { id: 'a', text: 'A workflow with predefined code paths, using Claude for the steps needing language understanding' },
+      { id: 'b', text: 'A fully autonomous agent, because agents are always more accurate than any fixed pipeline' },
+      { id: 'c', text: 'A manager agent that spawns a separate subagent for each field found on the invoice' },
+      { id: 'd', text: 'Neither, because Claude cannot reliably follow a fixed sequence of steps in order' },
     ],
     correctAnswer: ['a'],
     explanation:
@@ -62,7 +62,7 @@ export const agentsWorkflowsQuestions: Question[] = [
       { id: 'a', text: 'Orchestrator-workers' },
       { id: 'b', text: 'Prompt chaining' },
       { id: 'c', text: 'Routing' },
-      { id: 'd', text: 'Single-prompt with a larger max_tokens' },
+      { id: 'd', text: 'A single prompt with a bigger limit' },
     ],
     correctAnswer: ['a'],
     explanation:
@@ -83,10 +83,10 @@ export const agentsWorkflowsQuestions: Question[] = [
     question: 'Select all safeguards that make an autonomous agent loop safer to run.',
     type: 'multiple',
     options: [
-      { id: 'a', text: 'A maximum number of iterations or a budget that stops the loop' },
-      { id: 'b', text: 'Human approval before destructive or irreversible actions' },
-      { id: 'c', text: 'Logging each step and tool result so failures can be traced' },
-      { id: 'd', text: 'Letting the agent retry a failing action forever until it succeeds' },
+      { id: 'a', text: 'A maximum number of iterations or a spending budget that stops the loop' },
+      { id: 'b', text: 'Human approval before destructive or irreversible actions are carried out' },
+      { id: 'c', text: 'Logging each step and tool result so that failures can be traced afterwards' },
+      { id: 'd', text: 'Letting the agent retry a failing action indefinitely until it finally succeeds' },
     ],
     correctAnswer: ['a', 'b', 'c'],
     explanation:

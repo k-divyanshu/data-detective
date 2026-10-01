@@ -3,10 +3,12 @@ import { Badge } from '../../../shared/components/Badge'
 import { MockExamResults } from '../components/MockExamResults'
 import { MockExamRunner } from '../components/MockExamRunner'
 import { mockExams } from '../data/mockExams'
+import { examDomains } from '../data/exam'
 import { questionBank } from '../data/questions'
 import { useClaudeProgress } from '../state/useClaudeProgress'
 import type { MockExam, Question } from '../types'
-import { isCorrect, shuffle, withShuffledOptions } from '../utils/practice'
+import { assembleMock } from '../utils/assembleMock'
+import { isCorrect } from '../utils/practice'
 import { scoreMock, type MockScore } from '../utils/mock'
 
 type Phase =
@@ -19,8 +21,8 @@ export function MockExamPage() {
   const [phase, setPhase] = useState<Phase>({ name: 'list' })
 
   function start(exam: MockExam) {
-    const chosen = exam.questionIds.flatMap((id) => questionBank.find((q) => q.id === id) ?? [])
-    const questions = withShuffledOptions(shuffle(chosen))
+    // A fresh, weight-balanced set is drawn from the bank for every attempt.
+    const questions = assembleMock(questionBank, examDomains, exam.questionCount)
     setPhase({ name: 'running', exam, questions })
   }
 
@@ -80,7 +82,7 @@ export function MockExamPage() {
             <h3>{exam.title}</h3>
             <p className="muted">{exam.description}</p>
             <div className="challenge-card-meta">
-              <Badge>{exam.questionIds.length} questions</Badge>
+              <Badge>{exam.questionCount} questions</Badge>
               <Badge>{exam.durationMinutes} minutes</Badge>
             </div>
             <button type="button" className="button" onClick={() => start(exam)}>Start mock exam</button>
@@ -89,13 +91,10 @@ export function MockExamPage() {
         {mockExams.length === 0 && <p className="muted">No mock exams available yet.</p>}
       </div>
 
-      <div className="card">
-        <h3>Coming later</h3>
-        <p className="muted">
-          A 25-question mock and a full-length mock will be added once the question bank is large enough
-          to build them without repeating questions.
-        </p>
-      </div>
+      <p className="muted small">
+        Questions are drawn from a bank of {questionBank.length} practice questions in proportion to the published
+        domain weights, so each attempt is different. The full mock uses the real exam's item count and time limit.
+      </p>
     </>
   )
 }

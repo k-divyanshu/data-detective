@@ -82,6 +82,7 @@ export function DashboardPage() {
 
       <section className="action-row">
         <Link className="button" to={`/claude/resources?domain=${continueDomain}`}>Continue Learning</Link>
+        <Link className="button" to="/claude/plan">Study Plan</Link>
         <Link className="button" to="/claude/practice">Practice Questions</Link>
         <Link className="button" to="/claude/mock-exam">Mock Exam</Link>
         <Link className="button button-ghost" to="/claude/resources">Free Resources</Link>

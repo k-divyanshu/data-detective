@@ -69,16 +69,17 @@ before each commit. Skip it once with `git commit --no-verify`.
 | Feature | What it does |
 |---------|--------------|
 | Dashboard | Verified exam facts, domain overview with official weights, progress, streak, weak areas |
-| Resources | 71 free resources, each verified and labelled OFFICIAL or COMMUNITY; filter by type and exam domain |
-| Practice | Choose domain, difficulty and count; instant feedback with why each wrong option is wrong |
-| Mock exam | Timed, with question navigator, mark-for-review, domain-level results and recommended resources |
+| Resources | 77 free resources, each verified and labelled OFFICIAL or COMMUNITY; filter by type and exam domain |
+| Study plan | A day-by-day schedule built from the exam weights, your accuracy and weak areas, and the time you have |
+| Practice | 139 questions; choose domain, difficulty and count; instant feedback with why each wrong option is wrong |
+| Mock exams | 10-question, 25-question and full 53-question (120 min) mocks, drawn fresh each time in proportion to the exam weights; navigator, mark-for-review, domain-level results |
 | Tips / Notes | Add, upvote, save and report tips; private notes linked to domains, resources or questions |
 
 Honest limits:
 - Exam details come from the official **Exam Guide v1.0 (July 2026)** and certification FAQ, checked
   2026-09-30. The exam is currently open only to people at Claude Partner Network organizations.
-- Practice questions are **AI-generated study aids** based on the published objectives. They are not real
-  exam questions, and scores do not predict exam results.
+- Practice questions are **AI-generated study aids** based on the published objectives and checked against
+  the official documentation. They are not real exam questions, and scores do not predict exam results.
 - Tips, votes, notes and progress live in your browser only. There is no server yet.
 - Exam data is in `src/tracks/claude/data/` so it can be updated when the exam changes.
 
@@ -97,12 +98,19 @@ frontend/src/
 
 ## Adding a Data Engineering challenge
 
-1. Add its synthetic data in `src/tracks/data-engineering/data/` and, if needed, an analysis function with
-   a test in `.../utils/`.
-2. Create `<Name>Challenge.tsx` and `<Name>LearningSection.tsx` in `.../components/`. Copy an
-   existing challenge as a starting point.
-3. Add an entry to `.../data/challenges.ts` (set `available: true`).
-4. Register the component in `challengeViews` in `.../pages/ChallengeDetailPage.tsx`.
+A challenge is a plain data object (`ChallengeDefinition`), rendered by one generic `ChallengeView`:
+
+1. Add its synthetic data in `src/tracks/data-engineering/data/` and, if you need a computed result,
+   an analysis function with a test in `.../utils/`.
+2. Create `src/tracks/data-engineering/challenges/<name>.tsx` exporting a `ChallengeDefinition`: title,
+   category, difficulty, the problem text, summary statistics, tables (`defineTable`), SQL playground tables
+   and suggested queries, questions, and the lesson (headings, paragraphs, lists, code blocks). Text fields
+   accept `` `code` `` and `*emphasis*`. Copy an existing definition as a starting point.
+3. Add it to the list in `src/tracks/data-engineering/challenges/index.ts`. The challenge list, routing,
+   progress tracking and cards pick it up automatically.
+
+`challenges.test.ts` checks every definition and actually runs each suggested query and reference answer
+in SQLite.
 
 SQL questions are graded by running the learner's query and a reference query on the same data.
 Row order and column names are ignored; values and row and column counts must match.
@@ -130,7 +138,6 @@ same two settings: build command `npm run build` and output folder `frontend/dis
 
 ## Roadmap ideas
 
-- Define challenges as data and render them with one generic component
-- Claude track: a simple adaptive study plan, more questions per domain, a full-length mock
+- Claude track: more questions per domain, tick-off progress on the study plan
 - More challenges: join fan-out, late-arriving data, schema drift
 - Optional backend for accounts and cross-device progress

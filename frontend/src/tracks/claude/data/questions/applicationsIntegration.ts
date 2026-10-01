@@ -9,10 +9,10 @@ export const applicationsIntegrationQuestions: Question[] = [
     question: 'Claude\'s response has stop_reason "tool_use" and contains a tool_use block. What should your application do next?',
     type: 'single',
     options: [
-      { id: 'a', text: 'Run the requested tool in your code, then send a new user message with a tool_result block whose tool_use_id matches the tool_use block\'s id' },
-      { id: 'b', text: 'Send the tool output back in an assistant message so Claude sees it as its own words' },
-      { id: 'c', text: 'Do nothing; Claude executes your client-side tools automatically' },
-      { id: 'd', text: 'Resend the identical request until stop_reason changes to end_turn' },
+      { id: 'a', text: 'Run the tool in your code, then reply with a user message holding a tool_result with the same tool_use_id' },
+      { id: 'b', text: 'Place the tool\'s output in an assistant message so Claude treats it as part of its own earlier reply' },
+      { id: 'c', text: 'Take no action, because Claude executes client-side tools itself and then resumes the same turn automatically' },
+      { id: 'd', text: 'Resend the identical request unchanged until the stop_reason eventually switches to end_turn by itself' },
     ],
     correctAnswer: ['a'],
     explanation:
@@ -34,10 +34,10 @@ export const applicationsIntegrationQuestions: Question[] = [
       'A nightly job must summarize 40,000 stored support tickets. Results are needed by the next morning, and lowering cost matters more than speed. Which approach fits best?',
     type: 'single',
     options: [
-      { id: 'a', text: 'Submit the tickets through the Message Batches API and collect the results later' },
-      { id: 'b', text: 'Stream every request so text arrives faster' },
-      { id: 'c', text: 'Put all 40,000 tickets into one synchronous request' },
-      { id: 'd', text: 'Enable prompt caching and nothing else' },
+      { id: 'a', text: 'Submit the tickets through the Message Batches API and collect the results the next morning' },
+      { id: 'b', text: 'Stream every request, so each summary starts appearing on screen a little sooner' },
+      { id: 'c', text: 'Put all 40,000 tickets into one synchronous request and wait for a single long answer' },
+      { id: 'd', text: 'Turn on prompt caching and send the 40,000 tickets one by one as ordinary requests' },
     ],
     correctAnswer: ['a'],
     explanation:
@@ -58,10 +58,10 @@ export const applicationsIntegrationQuestions: Question[] = [
     question: 'A chat interface should display Claude\'s reply as it is being generated. Which statement is correct?',
     type: 'single',
     options: [
-      { id: 'a', text: 'Set stream to true; the API sends server-sent events such as content_block_delta as text is produced' },
-      { id: 'b', text: 'Poll a status endpoint every second until the full message is ready' },
-      { id: 'c', text: 'Submit the request as a batch and read partial results' },
-      { id: 'd', text: 'Lower max_tokens so the reply finishes sooner' },
+      { id: 'a', text: 'Set stream to true so the API sends server-sent events like content_block_delta as text is generated' },
+      { id: 'b', text: 'Poll a status endpoint every second and render whichever partial text has appeared by then' },
+      { id: 'c', text: 'Submit the request as a batch and read the partial results while the batch is still processing' },
+      { id: 'd', text: 'Lower max_tokens so each reply finishes sooner and then show it in a single piece on screen' },
     ],
     correctAnswer: ['a'],
     explanation:
@@ -82,10 +82,10 @@ export const applicationsIntegrationQuestions: Question[] = [
     question: 'Which workload benefits most from prompt caching?',
     type: 'single',
     options: [
-      { id: 'a', text: 'Many requests that begin with the same long system prompt and reference document, differing only in the final question' },
-      { id: 'b', text: 'Requests whose content is completely different every time' },
-      { id: 'c', text: 'A single one-off request that will never be repeated' },
-      { id: 'd', text: 'Requests where the first part of the prompt changes on every call' },
+      { id: 'a', text: 'Many requests share one long system prompt and reference document and differ only in the final question' },
+      { id: 'b', text: 'Each request carries completely different content, with no text repeated between any two calls' },
+      { id: 'c', text: 'A single one-off request that will never be sent again, so the prefix is never read back from cache' },
+      { id: 'd', text: 'Requests whose opening section changes on every call, with the stable text placed only at the very end' },
     ],
     correctAnswer: ['a'],
     explanation:
@@ -106,10 +106,10 @@ export const applicationsIntegrationQuestions: Question[] = [
     question: 'Select all good reasons to pin a specific model version in production configuration.',
     type: 'multiple',
     options: [
-      { id: 'a', text: 'Behavior changes only when you choose to upgrade, so you can evaluate the new model first' },
-      { id: 'b', text: 'Prompt and evaluation comparisons are not confused by a silent model change' },
-      { id: 'c', text: 'Pinned models are never retired' },
-      { id: 'd', text: 'Pinned models always cost less' },
+      { id: 'a', text: 'Behavior changes only when you decide to upgrade, so you can evaluate the new model first' },
+      { id: 'b', text: 'Prompt and evaluation comparisons stay meaningful because no silent model change gets mixed in' },
+      { id: 'c', text: 'A pinned model version is guaranteed to stay available forever and is never retired' },
+      { id: 'd', text: 'Pinned model versions always cost less per token than the floating alias for that model' },
     ],
     correctAnswer: ['a', 'b'],
     explanation:
@@ -118,7 +118,7 @@ export const applicationsIntegrationQuestions: Question[] = [
       c: 'Models are eventually deprecated and retired, so pinning does not remove the need to upgrade.',
       d: 'Pricing depends on the model chosen, not on whether the version is pinned.',
     },
-    resourceIds: ['choosing-a-model', 'models-overview'],
+    resourceIds: ['model-ids-and-versions', 'model-deprecations', 'choosing-a-model'],
     sourceType: 'ai-generated',
   },
   {
@@ -129,10 +129,10 @@ export const applicationsIntegrationQuestions: Question[] = [
     question: 'Why should prompts and Claude-related configuration be treated as versioned artifacts (for example, stored in version control)?',
     type: 'single',
     options: [
-      { id: 'a', text: 'Changes can be reviewed, rolled back, and linked to the evaluation results they produced' },
-      { id: 'b', text: 'Prompts stored in source control are processed faster by the API' },
-      { id: 'c', text: 'The API rejects prompts that are not versioned' },
-      { id: 'd', text: 'Versioning removes the risk of prompt injection' },
+      { id: 'a', text: 'Changes can be reviewed, rolled back, and tied to the evaluation results they produced' },
+      { id: 'b', text: 'Prompts kept in source control are processed faster by the API than prompts stored elsewhere' },
+      { id: 'c', text: 'The API refuses requests whose prompt text has not been registered with a version number' },
+      { id: 'd', text: 'Versioning removes the risk of prompt injection because every wording is tracked in history' },
     ],
     correctAnswer: ['a'],
     explanation:
@@ -153,10 +153,10 @@ export const applicationsIntegrationQuestions: Question[] = [
     question: 'Your chat app sends a user\'s second message to the Messages API. How does Claude know about the earlier conversation?',
     type: 'single',
     options: [
-      { id: 'a', text: 'Your app includes the earlier messages in the messages array of each request' },
-      { id: 'b', text: 'The API automatically stores each user\'s conversation on the server' },
-      { id: 'c', text: 'Claude remembers it from the previous request\'s id' },
-      { id: 'd', text: 'Only the system prompt carries over between requests' },
+      { id: 'a', text: 'Your application includes the earlier turns in the messages array of every new request' },
+      { id: 'b', text: 'The API automatically keeps each user\'s conversation on the server and reloads it for you' },
+      { id: 'c', text: 'Claude recalls the earlier turns from the id returned by your previous request' },
+      { id: 'd', text: 'Only the system prompt persists between requests, so earlier user turns are not needed' },
     ],
     correctAnswer: ['a'],
     explanation:
@@ -177,10 +177,10 @@ export const applicationsIntegrationQuestions: Question[] = [
     question: 'How do you give Claude an image to analyze through the Messages API?',
     type: 'single',
     options: [
-      { id: 'a', text: 'Add an image content block (for example a base64 or URL source) to a user message' },
-      { id: 'b', text: 'It is not possible; Claude accepts text only' },
-      { id: 'c', text: 'Paste the raw image bytes into the system string' },
-      { id: 'd', text: 'Add a top-level images array next to the model parameter' },
+      { id: 'a', text: 'Add an image content block, using a base64 or URL source, to a user message' },
+      { id: 'b', text: 'It is not possible because Claude models accept plain text input only' },
+      { id: 'c', text: 'Paste the raw image bytes straight into the system parameter as a long string' },
+      { id: 'd', text: 'Attach a separate top-level images array next to the model parameter in the request' },
     ],
     correctAnswer: ['a'],
     explanation: 'Images are sent as content blocks inside a message, alongside any text blocks.',

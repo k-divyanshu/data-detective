@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { examDomains } from '../data/exam'
 import { questionBank } from '../data/questions'
 import { availableCount, type DifficultyFilter, type PracticeConfig } from '../utils/practice'
@@ -6,9 +7,15 @@ import { availableCount, type DifficultyFilter, type PracticeConfig } from '../u
 const COUNT_CHOICES = [5, 10, 15, 20]
 
 export function PracticeSetup({ onStart }: { onStart: (config: PracticeConfig) => void }) {
-  const [domainId, setDomainId] = useState<string>('all')
+  // Links such as the study plan can pre-select a domain and size: /claude/practice?domain=tools-mcp&count=10
+  const [params] = useSearchParams()
+  const domainParam = params.get('domain')
+  const countParam = Number(params.get('count'))
+  const [domainId, setDomainId] = useState<string>(
+    examDomains.some((domain) => domain.id === domainParam) ? (domainParam as string) : 'all',
+  )
   const [difficulty, setDifficulty] = useState<DifficultyFilter>('any')
-  const [count, setCount] = useState(10)
+  const [count, setCount] = useState(COUNT_CHOICES.includes(countParam) ? countParam : 10)
 
   const available = availableCount(questionBank, domainId, difficulty)
   const actualCount = Math.min(count, available)

@@ -87,12 +87,14 @@ export interface Question {
   sourceType: QuestionSource
 }
 
+// A mock is assembled from the question bank each time it starts, following the exam's domain
+// weights, so it needs only a size and a time limit.
 export interface MockExam {
   id: string
   title: string
   description: string
+  questionCount: number
   durationMinutes: number
-  questionIds: string[]
 }
 
 // ---- User progress (all stored in the browser) ----

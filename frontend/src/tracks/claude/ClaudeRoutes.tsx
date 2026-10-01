@@ -6,12 +6,14 @@ import { NotesPage } from './pages/NotesPage'
 import { PracticePage } from './pages/PracticePage'
 import { ProgressPage } from './pages/ProgressPage'
 import { ResourcesPage } from './pages/ResourcesPage'
+import { StudyPlanPage } from './pages/StudyPlanPage'
 import { TipsPage } from './pages/TipsPage'
 import { ClaudeProgressProvider } from './state/ClaudeProgressProvider'
 
 const nav: NavItem[] = [
   { to: '/claude', label: 'Dashboard', end: true },
   { to: '/claude/resources', label: 'Resources' },
+  { to: '/claude/plan', label: 'Plan' },
   { to: '/claude/practice', label: 'Practice' },
   { to: '/claude/mock-exam', label: 'Mock Exam' },
   { to: '/claude/tips', label: 'Tips' },
@@ -27,6 +29,7 @@ export function ClaudeRoutes() {
         <Route element={<TrackLayout trackId="claude" trackLabel="Claude Developer" nav={nav} />}>
           <Route index element={<DashboardPage />} />
           <Route path="resources" element={<ResourcesPage />} />
+          <Route path="plan" element={<StudyPlanPage />} />
           <Route path="practice" element={<PracticePage />} />
           <Route path="mock-exam" element={<MockExamPage />} />
           <Route path="tips" element={<TipsPage />} />

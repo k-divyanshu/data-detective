@@ -15,12 +15,12 @@ so keep code simple and readable, and briefly explain non-obvious decisions.
 - Routes: `/` track selection, `/data-engineering/*`, `/claude/*`. Each track has its own layout,
   progress state and localStorage keys. Never import from one track into the other.
 - `src/shared/` generic UI and hooks used by both tracks (Badge, StatCard, TrackLayout, storage helpers)
-- `src/tracks/data-engineering/` `data/` datasets + `challenges.ts`, `utils/` tested logic,
-  `components/` one `<Name>Challenge.tsx` + `<Name>LearningSection.tsx` per challenge, `pages/`, `progress/`
+- `src/tracks/data-engineering/` `data/` datasets, `challenges/` one `ChallengeDefinition` data file per
+  challenge (rendered by the generic `ChallengeView`), `utils/` tested logic, `components/`, `pages/`, `progress/`
 - `src/tracks/claude/` `data/` (exam config, resources, questions per domain, mock exams),
   `utils/` tested logic, `state/` progress/notes/tips hooks, `components/`, `pages/`
-- Adding a DE challenge: follow "Adding a challenge" in `README.md`; also register it in `challengeViews`
-  in `tracks/data-engineering/pages/ChallengeDetailPage.tsx`, or it renders as "Coming soon".
+- Adding a DE challenge: write a definition in `tracks/data-engineering/challenges/` and list it in that
+  folder's `index.ts` (see "Adding a Data Engineering challenge" in `README.md`). Nothing else to register.
 
 ## Code conventions
 - Strict TypeScript. No `enum` (`erasableSyntaxOnly`); use `import type` for types (`verbatimModuleSyntax`).
@@ -51,7 +51,10 @@ so keep code simple and readable, and briefly explain non-obvious decisions.
 - New questions: explain every wrong option in `whyIncorrect`, link `resourceIds`, and avoid brittle
   facts (prices, model names). `data/dataIntegrity.test.ts` enforces the structure.
 - Authored questions list the right answer first; anything shown to learners must go through
-  `withShuffledOptions`.
+  `withShuffledOptions`. Keep option lengths comparable (a test fails if the correct option is usually the
+  longest), and include some multiple-response and advanced questions.
+- Mocks are assembled per attempt by `assembleMock` from the exam weights; they hold a size and a time
+  limit, not fixed question lists.
 
 ## Scope and boundaries
 - No backend, database, auth, cloud services or AI API yet. Datasets stay synthetic.

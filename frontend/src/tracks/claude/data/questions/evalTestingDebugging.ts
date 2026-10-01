@@ -10,9 +10,9 @@ export const evalTestingDebuggingQuestions: Question[] = [
     type: 'single',
     options: [
       { id: 'a', text: 'Wait and retry with exponential backoff, respecting any retry-after guidance' },
-      { id: 'b', text: 'Retry immediately in a tight loop' },
-      { id: 'c', text: 'Rewrite the prompt, since the error means it was invalid' },
-      { id: 'd', text: 'Treat it as an authentication problem and rotate the key' },
+      { id: 'b', text: 'Retry immediately in a tight loop until the request finally succeeds' },
+      { id: 'c', text: 'Rewrite the prompt, because the error means that the prompt was invalid' },
+      { id: 'd', text: 'Treat it as an authentication problem and rotate the API key straight away' },
     ],
     correctAnswer: ['a'],
     explanation:
@@ -34,10 +34,10 @@ export const evalTestingDebuggingQuestions: Question[] = [
       'Users report wrong answers from your Claude-powered feature. What is the most useful first debugging step?',
     type: 'single',
     options: [
-      { id: 'a', text: 'Inspect the exact request and response to see whether the integration built the wrong input or the model produced a wrong output' },
-      { id: 'b', text: 'Immediately switch to a larger model' },
-      { id: 'c', text: 'Add more instructions to the prompt without looking at any failures' },
-      { id: 'd', text: 'Assume the model is at fault' },
+      { id: 'a', text: 'Inspect the exact request and response to tell an integration bug from a model error' },
+      { id: 'b', text: 'Immediately switch to a larger model and check whether the answers get better' },
+      { id: 'c', text: 'Add many more instructions to the prompt without first examining any of the failures' },
+      { id: 'd', text: 'Assume the model itself is at fault and file a bug report with the provider' },
     ],
     correctAnswer: ['a'],
     explanation:
