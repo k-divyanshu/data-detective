@@ -15,7 +15,7 @@ export const evalTestingDebuggingMoreQuestions: Question[] = [
       { id: 'd', text: 'Rotate your API key and then send the same request again to see if it helps' },
     ],
     correctAnswer: ['b'],
-    explanation: 'A 400 means the request itself is malformed or invalid, so the cure is to correct it rather than retry.',
+    explanation: 'A 400 invalid_request_error means there is a problem with the format or content of the request (the API also returns 400 when a spend limit you configured is reached). Read the error message and fix the cause; resending the same request unchanged will fail again.',
     whyIncorrect: {
       a: 'An unchanged invalid request keeps failing.',
       c: 'Waiting does not repair a bad request.',

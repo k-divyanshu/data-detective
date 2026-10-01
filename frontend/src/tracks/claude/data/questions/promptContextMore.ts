@@ -194,12 +194,12 @@ export const promptContextMoreQuestions: Question[] = [
     type: 'single',
     options: [
       { id: 'a', text: 'Ask politely for JSON in the instructions and trust the model to comply' },
-      { id: 'b', text: 'Use structured outputs or a tool with an input schema, and still validate in code' },
+      { id: 'b', text: 'Use structured outputs or strict tool use with a schema, and still validate in code' },
       { id: 'c', text: 'Parse the reply with a regular expression and ignore any errors that occur' },
       { id: 'd', text: 'Trust that the first character of the reply will always be an opening brace' },
     ],
     correctAnswer: ['b'],
-    explanation: 'Schema-constrained mechanisms greatly improve conformity, and validation in your code catches the remaining cases.',
+    explanation: 'Structured outputs (and strict tool use) use constrained decoding to guarantee schema-compliant JSON. Validating in code still catches edge cases such as refusals or responses cut off by max_tokens.',
     whyIncorrect: {
       a: 'A polite request does not guarantee valid structure.',
       c: 'Ignoring parse errors hides failures.',

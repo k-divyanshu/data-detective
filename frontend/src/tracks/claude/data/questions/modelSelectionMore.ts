@@ -4,9 +4,9 @@ export const modelSelectionMoreQuestions: Question[] = [
   {
     id: 'model-thinking-when',
     domainId: 'model-selection-optimization',
-    topic: 'Extended thinking',
+    topic: 'Thinking and effort',
     difficulty: 'intermediate',
-    question: 'For which task is extended thinking most likely to be worth its extra tokens and latency?',
+    question: 'For which task is more thinking (a higher effort level) most likely to be worth its extra tokens and latency?',
     type: 'single',
     options: [
       { id: 'a', text: 'Looking up a phone number that is already stored in the customer database' },
@@ -15,7 +15,7 @@ export const modelSelectionMoreQuestions: Question[] = [
       { id: 'd', text: 'Choosing which greeting to show on a simple welcome screen for new visitors' },
     ],
     correctAnswer: ['b'],
-    explanation: 'Extended thinking helps with complex reasoning. For simple, direct tasks it only adds cost and delay.',
+    explanation: 'More thinking helps with complex reasoning. For simple, direct tasks it only adds cost and delay, so a lower effort level fits better.',
     whyIncorrect: {
       a: 'A direct lookup needs no extended reasoning.',
       c: 'Copying text needs no reasoning.',
@@ -153,7 +153,7 @@ export const modelSelectionMoreQuestions: Question[] = [
       { id: 'd', text: 'Disable caching entirely and shorten the conversation by dropping the early turns' },
     ],
     correctAnswer: ['b'],
-    explanation: 'Because history is a growing prefix, marking a breakpoint after the most recent stable turn lets the earlier turns be reused on the next request.',
+    explanation: 'Because history is a growing prefix, marking a breakpoint after the most recent stable turn lets the earlier turns be reused on the next request. Automatic caching (a single top-level cache_control) does this for you by moving the breakpoint forward as the conversation grows.',
     whyIncorrect: {
       a: 'The older part of the conversation is an unchanged prefix, which is cacheable.',
       c: 'Caching only the system prompt leaves the large, growing history uncached.',
@@ -318,7 +318,7 @@ export const modelSelectionMoreQuestions: Question[] = [
     whyIncorrect: {
       a: 'It overpays for the many simple questions.',
       c: 'It would fail on the hard cases.',
-      d: 'Random choice gives neither savings nor quality.',
+      d: 'Random choice ignores difficulty, so hard questions can land on the small model while easy ones waste the large model.',
     },
     resourceIds: ['choosing-a-model', 'building-effective-agents'],
     sourceType: 'ai-generated',

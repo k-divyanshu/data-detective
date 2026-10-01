@@ -114,9 +114,9 @@ export const multiResponseQuestions: Question[] = [
   {
     id: 'model-multi-thinking-effects',
     domainId: 'model-selection-optimization',
-    topic: 'Extended thinking',
+    topic: 'Thinking and effort',
     difficulty: 'intermediate',
-    question: 'Select all likely consequences of turning on extended thinking or a higher effort setting.',
+    question: 'Select all likely consequences of raising the effort level, so the model reasons more.',
     type: 'multiple',
     options: [
       { id: 'a', text: 'More output tokens are generated, so cost can rise' },
@@ -127,7 +127,7 @@ export const multiResponseQuestions: Question[] = [
     correctAnswer: ['a', 'b'],
     explanation: 'More reasoning means more generated tokens and more time. It can improve quality on hard problems, but it is not a cost saving and does not change the context window.',
     whyIncorrect: {
-      c: 'The model\'s context window is a fixed property and is not reduced by this setting.',
+      c: 'The context window size is fixed for the model. More thinking uses tokens inside that window, but it does not make the window smaller.',
       d: 'Extra reasoning is billed; it does not automatically make the request cheaper.',
     },
     resourceIds: ['extended-thinking', 'effort-parameter'],

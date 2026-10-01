@@ -90,7 +90,7 @@ export const promptContextEngineeringQuestions: Question[] = [
     ],
     correctAnswer: ['a'],
     explanation:
-      'Model output is untrusted input to the rest of your system. Validate it, parse defensively, and decide in advance what happens when it is wrong.',
+      'Model output is untrusted input to the rest of your system. Validate it, parse defensively, and decide in advance what happens when it is wrong. Where available, structured outputs (JSON outputs or strict tool use) guarantee the response matches your schema; you should still check the values and handle refusals or truncated responses.',
     whyIncorrect: {
       b: 'Confident wording is not evidence of correctness.',
       c: 'Unvalidated output can corrupt data or be exploited.',

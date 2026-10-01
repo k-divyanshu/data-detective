@@ -130,7 +130,7 @@ export const securitySafetyMoreQuestions: Question[] = [
       { id: 'd', text: 'A bigger model that understands the risks of destructive commands better' },
     ],
     correctAnswer: ['b'],
-    explanation: 'Hooks and permission rules are enforced by the tool, so they hold even if the model is mistaken or manipulated.',
+    explanation: 'Hooks and permission rules are enforced by Claude Code itself, not by the model, so they apply whatever the model decides. A Bash deny rule matches the command text only, so for stronger protection pair it with a hook or sandboxing.',
     whyIncorrect: {
       a: 'CLAUDE.md is guidance the model usually follows, not a hard control.',
       c: 'Prompt text is not enforcement.',

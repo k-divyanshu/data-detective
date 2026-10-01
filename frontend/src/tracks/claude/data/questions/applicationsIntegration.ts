@@ -45,7 +45,7 @@ export const applicationsIntegrationQuestions: Question[] = [
     whyIncorrect: {
       b: 'Streaming improves how quickly a person sees output; it does not reduce cost for an offline job.',
       c: 'One request cannot hold that much content within a context window, and it would be a single point of failure.',
-      d: 'Caching helps only when requests share a repeated prefix; it does not make 40,000 distinct tickets cheaper to process.',
+      d: 'Caching discounts only a repeated prefix, such as shared instructions. Each ticket\'s own text is still billed at the normal real-time rate, so the saving is far smaller than the batch discount (and the two can be combined).',
     },
     resourceIds: ['batch-processing'],
     sourceType: 'ai-generated',

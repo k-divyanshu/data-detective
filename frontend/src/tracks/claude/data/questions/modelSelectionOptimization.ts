@@ -12,7 +12,7 @@ export const modelSelectionOptimizationQuestions: Question[] = [
     options: [
       { id: 'a', text: 'Use the smallest and fastest model tier that still meets the accuracy target' },
       { id: 'b', text: 'Use the most capable tier available, to be safe on every single message' },
-      { id: 'c', text: 'Use the largest model with extended thinking switched on for each call' },
+      { id: 'c', text: 'Use the largest model at its highest effort level for every single call' },
       { id: 'd', text: 'Choose whichever model was released most recently, since newer is always better' },
     ],
     correctAnswer: ['a'],
@@ -20,7 +20,7 @@ export const modelSelectionOptimizationQuestions: Question[] = [
       'Model choice is a quality, latency and cost trade-off. When a smaller tier meets the requirement, it is usually faster and cheaper.',
     whyIncorrect: {
       b: 'A more capable tier adds cost and latency you have already shown you do not need.',
-      c: 'Extended thinking adds tokens and delay, which works against a simple, high-volume task.',
+      c: 'A larger model at high effort adds tokens and delay, which works against a simple, high-volume task.',
       d: 'Release date is not a selection criterion; fit to the task is.',
     },
     resourceIds: ['choosing-a-model', 'models-overview'],

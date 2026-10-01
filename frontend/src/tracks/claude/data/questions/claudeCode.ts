@@ -7,7 +7,7 @@ export const claudeCodeQuestions: Question[] = [
     topic: 'Hooks and permissions',
     difficulty: 'intermediate',
     question:
-      'You must guarantee that Claude Code can never run a particular destructive command in your repository. Which approach provides that guarantee?',
+      'You want Claude Code to block a particular destructive command in your repository, whatever the model decides. Which approach enforces this?',
     type: 'single',
     options: [
       { id: 'a', text: 'A permission deny rule or a PreToolUse hook that blocks the command' },
@@ -17,7 +17,7 @@ export const claudeCodeQuestions: Question[] = [
     ],
     correctAnswer: ['a'],
     explanation:
-      'CLAUDE.md is context that Claude usually follows, not an enforced control. Deny rules and hooks are enforced by the tool itself, so they are the right place for hard limits.',
+      'CLAUDE.md is context that Claude usually follows, not an enforced control. Deny rules and hooks are enforced by Claude Code itself, so they are the right place for hard limits. A Bash deny rule matches command text, so it can miss the same program run another way; combine it with hooks or sandboxing for a stronger boundary.',
     whyIncorrect: {
       b: 'CLAUDE.md is guidance loaded into context, not a guarantee.',
       c: 'A one-off instruction is even weaker than a CLAUDE.md file.',

@@ -147,13 +147,13 @@ export const toolsMcpMoreQuestions: Question[] = [
     question: 'Which description of MCP roles is correct?',
     type: 'single',
     options: [
-      { id: 'a', text: 'A host application runs an MCP client that connects to one or more MCP servers' },
+      { id: 'a', text: 'A host application creates one MCP client per server, each with its own connection' },
       { id: 'b', text: 'The MCP server runs inside the model itself, and the client is simply the end user' },
       { id: 'c', text: 'Clients provide the tools and resources, and the servers are the ones consuming them' },
       { id: 'd', text: 'MCP defines no fixed roles at all, so any program can play any part it likes' },
     ],
     correctAnswer: ['a'],
-    explanation: 'An application hosts clients that each connect to a server, and the servers expose capabilities such as tools, resources and prompts.',
+    explanation: 'The host (for example Claude Code or Claude Desktop) creates one MCP client for each MCP server it uses, and each client keeps a dedicated connection to its server. Servers expose capabilities such as tools, resources and prompts.',
     whyIncorrect: {
       b: 'Servers are separate programs, not part of the model.',
       c: 'Servers provide capabilities to clients.',
