@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ThemeToggle } from '../shared/components/ThemeToggle'
+import { UserMenu } from '../shared/components/UserMenu'
 
 interface TrackChoice {
   id: string
@@ -43,6 +44,7 @@ export function HomePage() {
           </span>
           <span className="nav" />
           <ThemeToggle />
+          <UserMenu />
         </div>
       </header>
 

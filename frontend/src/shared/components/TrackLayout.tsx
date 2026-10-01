@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
 import { ThemeToggle } from './ThemeToggle'
+import { UserMenu } from './UserMenu'
 
 export interface NavItem {
   to: string
@@ -44,6 +45,7 @@ export function TrackLayout({ trackId, trackLabel, nav }: TrackLayoutProps) {
           </nav>
           <Link to="/" className="button button-ghost">Switch Track</Link>
           <ThemeToggle />
+          <UserMenu />
         </div>
       </header>
       <main className="container">
