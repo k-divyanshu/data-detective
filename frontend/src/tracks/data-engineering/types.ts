@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react'
+
 export type Difficulty = 'Beginner' | 'Intermediate' | 'Advanced'
 
 export interface Challenge {
@@ -129,4 +131,51 @@ export interface OrphanOrdersAnalysis {
   lostRevenue: number
   lostRate: number // percentage of revenue lost, 0-100
   isOrphan: boolean[] // one entry per input order
+}
+
+// ---- Data-driven challenges ----
+// A challenge is described by plain data; ChallengeView renders any definition the same way.
+// Text fields support `code` (backticks) and *emphasis* via InlineText.
+
+export type LessonBlock =
+  | { type: 'heading'; text: string }
+  | { type: 'paragraph'; text: string; muted?: boolean }
+  | { type: 'list'; items: string[] }
+  | { type: 'code'; language: string; code: string }
+
+export interface SummaryStat {
+  label: string
+  value: string | number
+  hint?: string
+  tone?: 'default' | 'warning'
+}
+
+// A dataset shown to the learner. Build it with defineTable() so rows and columns stay type-checked.
+export interface TableView {
+  title: string
+  render: () => ReactNode
+}
+
+export interface ChallengeContent {
+  problem: {
+    text: string
+    meta: { label: string; value: string | number }[]
+  }
+  summary: {
+    stats: SummaryStat[]
+    callout?: {
+      headline: string
+      detail?: string
+      ratio?: { badPercent: number; goodLabel: string; badLabel: string }
+    }
+    extra?: ReactNode // e.g. a chart
+  }
+  tables: TableView[]
+  sql: { tables: SqlTable[]; suggestions: SuggestedQuery[] }
+  questions: Question[]
+  lesson: { title: string; blocks: LessonBlock[] }
+}
+
+export interface ChallengeDefinition extends Omit<Challenge, 'available'> {
+  content: ChallengeContent
 }

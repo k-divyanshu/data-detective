@@ -12,9 +12,9 @@ function loadSqlModule(): Promise<SqlJsStatic> {
   return sqlModule
 }
 
-// Creates a new in-memory database containing every given table.
-export async function createDatabase(tables: SqlTable[]): Promise<Database> {
-  const SQL = await loadSqlModule()
+// Creates an in-memory database containing every given table. Takes the SQLite module as an
+// argument so tests can supply their own copy.
+export function populateDatabase(SQL: SqlJsStatic, tables: SqlTable[]): Database {
   const db = new SQL.Database()
 
   for (const table of tables) {
@@ -29,6 +29,10 @@ export async function createDatabase(tables: SqlTable[]): Promise<Database> {
     insert.free()
   }
   return db
+}
+
+export async function createDatabase(tables: SqlTable[]): Promise<Database> {
+  return populateDatabase(await loadSqlModule(), tables)
 }
 
 // Runs one or more statements and returns the result of the last one that produced rows.

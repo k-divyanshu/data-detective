@@ -1,42 +1,13 @@
+import { challengeDefinitions } from '../challenges'
 import type { Challenge } from '../types'
 
+// Challenges announced but not built yet. They show a "Coming soon" page.
+const plannedChallenges: Challenge[] = []
+
+// The list is derived from the definitions, so there is no second place to keep in sync.
 export const challenges: Challenge[] = [
-  {
-    id: 'duplicate-orders',
-    title: 'Find the Duplicate Orders',
-    category: 'Data Quality',
-    difficulty: 'Beginner',
-    description:
-      'Identify duplicate order records and determine why they can cause incorrect analytics.',
-    available: true,
-  },
-  {
-    id: 'missing-customer-ids',
-    title: 'Missing Customer IDs',
-    category: 'Data Quality',
-    difficulty: 'Beginner',
-    description:
-      'Investigate missing customer identifiers and determine their impact on downstream data.',
-    available: true,
-  },
-  {
-    id: 'unexpected-revenue-drop',
-    title: 'Unexpected Revenue Drop',
-    category: 'Data Investigation',
-    difficulty: 'Intermediate',
-    description:
-      'Investigate why reported revenue suddenly decreased after a pipeline run.',
-    available: true,
-  },
-  {
-    id: 'orders-vanish-after-join',
-    title: 'Orders That Vanish After a Join',
-    category: 'SQL Joins',
-    difficulty: 'Intermediate',
-    description:
-      'A join between orders and customers loses revenue without any error. Find the orphaned orders and choose the right join.',
-    available: true,
-  },
+  ...challengeDefinitions.map(({ content: _content, ...meta }) => ({ ...meta, available: true })),
+  ...plannedChallenges,
 ]
 
 export function getChallengeById(id: string): Challenge | undefined {
